@@ -5,6 +5,7 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import { ArticleCard } from "@/components/article-card";
 import { BreakingNewsBanner } from "@/components/breaking-news-banner";
+import { BreakingNewsBanner as BreakingNewsBannerFallback } from "@/components/ui/breaking-news-banner";
 
 export const metadata = {
   title: "Vercel Daily — Home",
@@ -21,7 +22,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense fallback={<BreakingNewsBannerFallback />}>
         <BreakingNewsBanner />
       </Suspense>
 
