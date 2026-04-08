@@ -1,3 +1,5 @@
+import { SubscribeButton } from "@/components/ui/subscribe-button";
+
 interface PaywallProps {
   excerpt?: string;
 }
@@ -16,10 +18,7 @@ export function Paywall({ excerpt }: PaywallProps) {
           <p className="mb-6 text-muted-foreground">
             Get unlimited access to all Vercel Daily articles.
           </p>
-          {/* TODO: replace with SubscribeButton once subscription is implemented */}
-          <button className="rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-            Subscribe
-          </button>
+          <SubscribeButton size="lg" />
         </div>
       </div>
     </>

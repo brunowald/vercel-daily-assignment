@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { getSubscriptionStatus } from "@/lib/get-subscription-status";
+import { SubscriptionProvider } from "@/components/subscription-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +39,15 @@ export const metadata: Metadata = {
   },
 };
 
+async function SubscriptionShell({ children }: { children: React.ReactNode }) {
+  const status = await getSubscriptionStatus();
+  return (
+    <SubscriptionProvider initialStatus={status}>
+      {children}
+    </SubscriptionProvider>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,8 +59,12 @@ export default function RootLayout({
         <meta name="theme-color" content="#1a1a2e" />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
+        <Suspense>
+          <SubscriptionShell>
+            <Header />
+            <main className="flex-1">{children}</main>
+          </SubscriptionShell>
+        </Suspense>
         <Suspense>
           <Footer />
         </Suspense>

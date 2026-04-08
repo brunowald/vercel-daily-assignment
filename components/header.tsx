@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SubscribeButton } from "@/components/ui/subscribe-button";
 
 export function Header() {
   return (
@@ -21,6 +22,7 @@ export function Header() {
           >
             Search
           </Link>
+          <SubscribeButton />
         </nav>
       </div>
     </header>
