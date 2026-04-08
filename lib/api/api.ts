@@ -1,4 +1,4 @@
-import type { components, operations } from "./api-types";
+import type { components, operations } from "./types";
 
 export type Article = components["schemas"]["Article"];
 export type BreakingNews = components["schemas"]["BreakingNews"];

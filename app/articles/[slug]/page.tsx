@@ -2,12 +2,12 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
-import { api, Article } from "@/lib/api";
-import { getSubscriptionStatus } from "@/lib/get-subscription-status";
-import { ArticlePageShell } from "@/components/ui/article-page-shell";
-import { ArticleContent } from "@/components/ui/article-content";
-import { TrendingArticles } from "@/components/trending-articles";
-import { Paywall } from "@/components/ui/paywall";
+import { api, Article } from "@/lib/api/api";
+import { getSubscriptionStatus } from "@/lib/subscription/get-subscription-status";
+import { ArticlePageShell } from "@/components/article/article-page-shell";
+import { ArticleContent } from "@/components/article/article-content";
+import { TrendingArticles } from "@/components/article/trending-articles";
+import { Paywall } from "@/components/article/paywall";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useTransition, useOptimistic } from "react";
-import { subscribeAction, unsubscribeAction } from "@/lib/subscription";
+import { subscribeAction, unsubscribeAction } from "@/lib/subscription/subscription";
 
 interface SubscriptionContextValue {
   status: "active" | "inactive";

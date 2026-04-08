@@ -1,6 +1,6 @@
 "use client";
 
-import { useSubscription } from "@/components/subscription-provider";
+import { useSubscription } from "@/components/contexts/subscription-provider";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 

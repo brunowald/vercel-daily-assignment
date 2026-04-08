@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { api } from "@/lib/api";
+import { api } from "@/lib/api/api";
 
 const COOKIE_NAME = "x-subscription-token";
 

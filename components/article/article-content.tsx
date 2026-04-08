@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Markdown, { type Components } from "react-markdown";
-import type { ContentBlock } from "@/lib/api";
+import type { ContentBlock } from "@/lib/api/api";
 
 interface ArticleContentProps {
   blocks: ContentBlock[];

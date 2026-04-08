@@ -2,10 +2,10 @@ import { Suspense } from "react";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { api } from "@/lib/api";
-import { ArticleCard } from "@/components/article-card";
-import { BreakingNewsBanner } from "@/components/breaking-news-banner";
-import { BreakingNewsBanner as BreakingNewsBannerFallback } from "@/components/ui/breaking-news-banner";
+import { api } from "@/lib/api/api";
+import { ArticleCard } from "@/components/article/article-card";
+import { BreakingNewsBanner } from "@/components/article/breaking-news-banner";
+import { BreakingNewsBanner as BreakingNewsBannerFallback } from "@/components/article/breaking-news-banner-ui";
 
 export const metadata = {
   title: "Vercel Daily — Home",

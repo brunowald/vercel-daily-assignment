@@ -1,7 +1,7 @@
 import { cacheLife } from "next/cache";
 import Link from "next/link";
 import Image from "next/image";
-import { api } from "@/lib/api";
+import { api } from "@/lib/api/api";
 
 interface TrendingArticlesProps {
   excludeId?: string;

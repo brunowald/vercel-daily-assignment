@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { getSubscriptionStatus } from "@/lib/get-subscription-status";
-import { SubscriptionProvider } from "@/components/subscription-provider";
+import { Header } from "@/components/shared/header";
+import { Footer } from "@/components/shared/footer";
+import { getSubscriptionStatus } from "@/lib/subscription/get-subscription-status";
+import { SubscriptionProvider } from "@/components/contexts/subscription-provider";
 import "./globals.css";
 
 const geistSans = Geist({

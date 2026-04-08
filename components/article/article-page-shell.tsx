@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import type { Article } from "@/lib/api";
+import type { Article } from "@/lib/api/api";
 
 interface ArticlePageShellProps {
   article?: Article;
