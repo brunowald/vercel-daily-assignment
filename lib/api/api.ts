@@ -45,6 +45,7 @@ export class ApiClient {
     this.baseUrl = config.baseUrl;
     this.bypassToken = config.bypassToken;
     const { headers, ...rest } = config.defaultOptions ?? {};
+    
     this.defaultHeaders = headers ?? {};
     this.defaultInit = rest;
   }
@@ -56,9 +57,11 @@ export class ApiClient {
       "x-vercel-protection-bypass": this.bypassToken,
       ...this.defaultHeaders,
     };
+
     for (const h of extra) {
       if (h) Object.assign(merged, h);
     }
+    
     return merged;
   }
 

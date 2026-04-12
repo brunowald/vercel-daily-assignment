@@ -4,11 +4,7 @@ import { useSubscription } from "@/components/contexts/subscription-provider";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
-interface SubscribeButtonProps {
-  size?: "default" | "sm" | "lg";
-}
-
-export function SubscribeButton({ size = "sm" }: SubscribeButtonProps) {
+export function SubscribeButton({ size = "sm" }: { size?: "default" | "sm" | "lg" }) {
   const { status, isPending, toggle } = useSubscription();
   const isSubscribed = status === "active";
 

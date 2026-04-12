@@ -108,10 +108,6 @@ export function SearchForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    onPendingChange(isPending);
-  }, [isPending, onPendingChange]);
-
   return (
     <div className="mb-8 flex flex-col gap-3 sm:flex-row">
       <select

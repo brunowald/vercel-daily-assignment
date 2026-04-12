@@ -2,6 +2,8 @@ import Image from "next/image";
 import Markdown, { type Components } from "react-markdown";
 import type { ContentBlock } from "@/lib/api/api";
 
+type Block<T extends ContentBlock["type"]> = Extract<ContentBlock, { type: T }>;
+
 interface ArticleContentProps {
   blocks: ContentBlock[];
 }
@@ -23,11 +25,11 @@ const blockRenderers: Record<
   (block: ContentBlock, index: number) => React.ReactNode
 > = {
   paragraph: (block, i) => {
-    const { text } = block as Extract<ContentBlock, { type: "paragraph" }>;
+    const { text } = block as Block<"paragraph">;
     return <BlockMd key={i} text={text} />;
   },
   heading: (block, i) => {
-    const b = block as Extract<ContentBlock, { type: "heading" }>;
+    const b = block as Block<"heading">;
     const HeadingComponent = b.level === 2 ? "h2" : "h3";
 
     return (
@@ -39,13 +41,13 @@ const blockRenderers: Record<
   blockquote: (block, i) => (
     <blockquote key={i}>
       <InlineMd
-        text={(block as Extract<ContentBlock, { type: "blockquote" }>).text}
+        text={(block as Block<"blockquote">).text}
       />
     </blockquote>
   ),
   "unordered-list": (block, i) => (
     <ul key={i}>
-      {(block as Extract<ContentBlock, { type: "unordered-list" }>).items.map(
+      {(block as Block<"unordered-list">).items.map(
         (item, j) => (
           <li key={j}>
             <InlineMd text={item} />
@@ -56,7 +58,7 @@ const blockRenderers: Record<
   ),
   "ordered-list": (block, i) => (
     <ol key={i}>
-      {(block as Extract<ContentBlock, { type: "ordered-list" }>).items.map(
+      {(block as Block<"ordered-list">).items.map(
         (item, j) => (
           <li key={j}>
             <InlineMd text={item} />
@@ -66,7 +68,7 @@ const blockRenderers: Record<
     </ol>
   ),
   image: (block, i) => {
-    const b = block as Extract<ContentBlock, { type: "image" }>;
+    const b = block as Block<"image">;
     return (
       <figure key={i}>
         {b.src && (
