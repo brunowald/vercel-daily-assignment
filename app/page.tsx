@@ -5,12 +5,14 @@ import Link from "next/link";
 import { api } from "@/lib/api/api";
 import { ArticleCard } from "@/components/article/article-card";
 import { BreakingNewsBanner } from "@/components/article/breaking-news-banner";
-import { BreakingNewsBanner as BreakingNewsBannerFallback } from "@/components/article/breaking-news-banner-ui";
 
 export const metadata = {
-  title: "Vercel Daily — Home",
+  title: "Home",
   description:
     "Your daily source for the latest in web development and technology.",
+  openGraph: {
+    title: "Vercel Daily",
+  },
 };
 
 export default async function HomePage() {
@@ -22,7 +24,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Suspense fallback={<BreakingNewsBannerFallback />}>
+      <Suspense>
         <BreakingNewsBanner />
       </Suspense>
 

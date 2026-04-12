@@ -31,11 +31,22 @@ export async function generateMetadata({
 
   if (!article) return { title: "Article Not Found" };
   
+  const title = article.title?.trim() ?? undefined;
+  const ogTitle = title ? `${title} | Vercel Daily` : undefined;
+
   return {
-    title: article.title,
+    title,
     description: article.excerpt,
     openGraph: {
-      title: article.title ?? undefined,
+      title: ogTitle,
+      description: article.excerpt ?? undefined,
+      type: "article",
+      publishedTime: article.publishedAt ?? undefined,
+      images: article.image ? [article.image] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
       description: article.excerpt ?? undefined,
       images: article.image ? [article.image] : [],
     },

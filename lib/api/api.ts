@@ -19,6 +19,8 @@ export type ListArticlesParams =
   operations["listArticles"]["parameters"]["query"];
 export type GetTrendingParams =
   operations["getTrendingArticles"]["parameters"]["query"];
+export type PublicationConfigResponse =
+  operations["getPublicationConfig"]["responses"][200]["content"]["application/json"];
 
 /**
  * RequestInit with headers narrowed to a plain record.
@@ -139,6 +141,16 @@ export class ApiClient {
    */
   async getCategories(init?: FetchOptions): Promise<CategoryListResponse> {
     return this.fetch<CategoryListResponse>("/categories", init);
+  }
+
+  /**
+   * Returns publication configuration including enabled features, social links, and SEO defaults.
+   * @param init - Optional fetch overrides.
+   */
+  async getPublicationConfig(
+    init?: FetchOptions
+  ): Promise<PublicationConfigResponse> {
+    return this.fetch<PublicationConfigResponse>("/publication/config", init);
   }
 
   /**

@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { api } from "@/lib/api/api";
 import type { CategoryListResponse } from "@/lib/api/api";
 import { SearchResults } from "@/components/search/search-results";
 import { searchArticles } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Search",
+  description: "Search articles on Vercel Daily.",
+  openGraph: {
+    title: "Search | Vercel Daily",
+  },
+};
 
 async function fetchCategories(): Promise<CategoryListResponse> {
   "use cache";
