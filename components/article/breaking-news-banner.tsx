@@ -2,7 +2,8 @@ import { api } from "@/lib/api/api";
 import Link from "next/link";
 
 export async function BreakingNewsBanner() {
-  const { data: news } = await api.getBreakingNews();
+  const result = await api.getBreakingNews().catch(() => null);
+  const news = result?.data;
   
   const headline = news?.headline;
 

@@ -20,7 +20,7 @@ async function getArticle(
   cacheLife("hours");
   cacheTag(`article-${slug}`);
 
-  return api.getArticle(slug);
+  return api.getArticle(slug).catch(() => ({ data: undefined }));
 }
 
 export async function generateMetadata({

@@ -10,11 +10,14 @@ import { api } from "@/lib/api/api";
 import type { PublicationConfigResponse } from "@/lib/api/api";
 import "./globals.css";
 
-async function getPublicationConfig(): Promise<PublicationConfigResponse> {
+async function getPublicationConfig(): Promise<PublicationConfigResponse | null> {
   "use cache";
   cacheLife("days");
 
-  return api.getPublicationConfig();
+  return api.getPublicationConfig().catch((e) => {
+    console.error("Failed to fetch publication config", e);
+    return null;
+  });
 }
 
 const geistSans = Geist({
@@ -33,11 +36,8 @@ const roboto = Roboto({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const config = await getPublicationConfig().catch((e) => {
-    console.error("Failed to fetch publication config", e);
-    return null;
-  });
-  
+  const config = await getPublicationConfig();
+
   const seo = config?.data?.seo;
 
   const title = seo?.defaultTitle ?? "Vercel Daily";
