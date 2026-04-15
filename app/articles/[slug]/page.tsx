@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
+import { headers } from "next/headers";
 import { api, Article } from "@/lib/api/api";
-import { getSubscriptionStatus } from "@/lib/subscription/get-subscription-status";
 import { ArticlePageShell } from "@/components/article/article-page-shell";
 import { ArticleContent } from "@/components/article/article-content";
 import { TrendingArticles } from "@/components/article/trending-articles";
@@ -56,8 +56,8 @@ export async function generateMetadata({
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
   const { data: article } = await getArticle(slug);
-  const status = await getSubscriptionStatus();
-  const isSubscribed = status === "active";
+  const headersList = await headers();
+  const isSubscribed = headersList.get("x-has-subscription-token") === "true";
 
   if (!article) notFound();
 

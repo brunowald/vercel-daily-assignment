@@ -76,7 +76,7 @@ export class ApiClient {
       headers: this.mergeHeaders(callHeaders),
     });
 
-    if (!res.ok) {
+    if (!res.ok && res.status !== 404) {
       const body = (await res.json().catch(() => null)) as ErrorResponse | null;
       throw new Error(
         body?.error?.message ?? `API ${path} responded with ${res.status}`

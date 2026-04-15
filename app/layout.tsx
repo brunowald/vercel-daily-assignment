@@ -33,20 +33,18 @@ const roboto = Roboto({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  let title = "Vercel Daily";
-  let description =
-    "The latest news, tutorials, and insights for modern web developers.";
-  let template = "%s | Vercel Daily";
+  const config = await getPublicationConfig().catch((e) => {
+    console.error("Failed to fetch publication config", e);
+    return null;
+  });
+  
+  const seo = config?.data?.seo;
 
-  try {
-    const config = await getPublicationConfig();
-    const seo = config.data?.seo;
-    if (seo?.defaultTitle) title = seo.defaultTitle;
-    if (seo?.defaultDescription) description = seo.defaultDescription;
-    if (seo?.titleTemplate) template = seo.titleTemplate;
-  } catch {
-    // fallback to hardcoded defaults above
-  }
+  const title = seo?.defaultTitle ?? "Vercel Daily";
+  const description =
+    seo?.defaultDescription ??
+    "The latest news, tutorials, and insights for modern web developers.";
+  const template = seo?.titleTemplate ?? "%s | Vercel Daily";
 
   return {
     metadataBase: new URL(
