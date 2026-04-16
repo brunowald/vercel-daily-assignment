@@ -9,6 +9,33 @@ export function NewsIllustration({ className }: { className?: string }) {
       className={className}
     >
       <defs>
+        <style>{`
+          .ni-decor        { fill: #1c1c1c; }
+          .ni-surface      { fill: #ffffff; }
+          .ni-stroke-card  { stroke: #e5e7eb; }
+          .ni-dark         { fill: #1c1c1c; }
+          .ni-muted        { fill: #d1d5db; }
+          .ni-globe-stroke { stroke: #2e2e2e; }
+          .ni-globe-grid   { stroke: #404040; }
+          .ni-device       { fill: #1c1c1c; }
+          .ni-device-stroke { stroke: #2e2e2e; }
+          .ni-screen       { fill: #ffffff; }
+          .ni-notch        { fill: #0d0d0d; }
+
+          @media (prefers-color-scheme: dark) {
+            .ni-decor        { fill: #e5e7eb; }
+            .ni-surface      { fill: #1e1e1e; }
+            .ni-stroke-card  { stroke: #374151; }
+            .ni-dark         { fill: #f3f4f6; }
+            .ni-muted        { fill: #374151; }
+            .ni-globe-stroke { stroke: #6b7280; }
+            .ni-device       { fill: #374151; }
+            .ni-device-stroke { stroke: #4b5563; }
+            .ni-screen       { fill: #111827; }
+            .ni-notch        { fill: #1f2937; }
+          }
+        `}</style>
+
         {/* Gradient for globe */}
         <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#aaaaaa" />
@@ -32,7 +59,7 @@ export function NewsIllustration({ className }: { className?: string }) {
       </defs>
 
       {/* Background circles - decorative */}
-      <circle cx="650" cy="100" r="80" fill="#1c1c1c" opacity="0.3">
+      <circle cx="650" cy="100" r="80" className="ni-decor" opacity="0.3">
         <animate
           attributeName="r"
           values="80;90;80"
@@ -40,7 +67,7 @@ export function NewsIllustration({ className }: { className?: string }) {
           repeatCount="indefinite"
         />
       </circle>
-      <circle cx="100" cy="500" r="60" fill="#1c1c1c" opacity="0.2">
+      <circle cx="100" cy="500" r="60" className="ni-decor" opacity="0.2">
         <animate
           attributeName="r"
           values="60;70;60"
@@ -51,7 +78,7 @@ export function NewsIllustration({ className }: { className?: string }) {
 
       {/* Main Globe */}
       <g transform="translate(400, 300)">
-        <circle r="120" fill="url(#globeGradient)" stroke="#2e2e2e" strokeWidth="2">
+        <circle r="120" fill="url(#globeGradient)" className="ni-globe-stroke" strokeWidth="2">
           <animate
             attributeName="stroke-opacity"
             values="0.5;1;0.5"
@@ -61,12 +88,12 @@ export function NewsIllustration({ className }: { className?: string }) {
         </circle>
 
         {/* Globe lines - latitude */}
-        <ellipse rx="120" ry="40" fill="none" stroke="#404040" strokeWidth="1" opacity="0.5" />
-        <ellipse rx="120" ry="80" fill="none" stroke="#404040" strokeWidth="1" opacity="0.5" />
-        <ellipse rx="100" ry="100" fill="none" stroke="#404040" strokeWidth="1" opacity="0.3" />
+        <ellipse rx="120" ry="40" fill="none" className="ni-globe-grid" strokeWidth="1" opacity="0.5" />
+        <ellipse rx="120" ry="80" fill="none" className="ni-globe-grid" strokeWidth="1" opacity="0.5" />
+        <ellipse rx="100" ry="100" fill="none" className="ni-globe-grid" strokeWidth="1" opacity="0.3" />
 
         {/* Globe lines - longitude */}
-        <ellipse rx="40" ry="120" fill="none" stroke="#404040" strokeWidth="1" opacity="0.5">
+        <ellipse rx="40" ry="120" fill="none" className="ni-globe-grid" strokeWidth="1" opacity="0.5">
           <animateTransform
             attributeName="transform"
             type="rotate"
@@ -76,7 +103,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </ellipse>
-        <ellipse rx="80" ry="120" fill="none" stroke="#404040" strokeWidth="1" opacity="0.5">
+        <ellipse rx="80" ry="120" fill="none" className="ni-globe-grid" strokeWidth="1" opacity="0.5">
           <animateTransform
             attributeName="transform"
             type="rotate"
@@ -114,8 +141,7 @@ export function NewsIllustration({ className }: { className?: string }) {
           width="140"
           height="180"
           rx="8"
-          fill="#ffffff"
-          stroke="#e5e7eb"
+          className="ni-surface ni-stroke-card"
           strokeWidth="2"
         >
           <animate
@@ -127,7 +153,7 @@ export function NewsIllustration({ className }: { className?: string }) {
         </rect>
 
         {/* Newspaper header */}
-        <rect x="15" y="15" width="110" height="12" rx="2" fill="#1c1c1c">
+        <rect x="15" y="15" width="110" height="12" rx="2" className="ni-dark">
           <animate
             attributeName="y"
             values="15;10;15"
@@ -137,7 +163,7 @@ export function NewsIllustration({ className }: { className?: string }) {
         </rect>
 
         {/* Text lines */}
-        <rect x="15" y="40" width="80" height="6" rx="1" fill="#d1d5db">
+        <rect x="15" y="40" width="80" height="6" rx="1" className="ni-muted">
           <animate
             attributeName="y"
             values="40;35;40"
@@ -145,7 +171,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </rect>
-        <rect x="15" y="55" width="100" height="6" rx="1" fill="#d1d5db">
+        <rect x="15" y="55" width="100" height="6" rx="1" className="ni-muted">
           <animate
             attributeName="y"
             values="55;50;55"
@@ -153,7 +179,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </rect>
-        <rect x="15" y="70" width="60" height="6" rx="1" fill="#d1d5db">
+        <rect x="15" y="70" width="60" height="6" rx="1" className="ni-muted">
           <animate
             attributeName="y"
             values="70;65;70"
@@ -173,7 +199,7 @@ export function NewsIllustration({ className }: { className?: string }) {
         </rect>
 
         {/* More text lines */}
-        <rect x="15" y="160" width="70" height="6" rx="1" fill="#d1d5db">
+        <rect x="15" y="160" width="70" height="6" rx="1" className="ni-muted">
           <animate
             attributeName="y"
             values="160;155;160"
@@ -191,8 +217,7 @@ export function NewsIllustration({ className }: { className?: string }) {
           width="100"
           height="180"
           rx="12"
-          fill="#1c1c1c"
-          stroke="#2e2e2e"
+          className="ni-device ni-device-stroke"
           strokeWidth="2"
         >
           <animate
@@ -204,7 +229,7 @@ export function NewsIllustration({ className }: { className?: string }) {
         </rect>
 
         {/* Screen */}
-        <rect x="8" y="20" width="84" height="140" rx="4" fill="#ffffff">
+        <rect x="8" y="20" width="84" height="140" rx="4" className="ni-screen">
           <animate
             attributeName="y"
             values="20;25;20"
@@ -222,7 +247,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </rect>
-        <rect x="14" y="75" width="72" height="35" rx="4" fill="#1c1c1c" opacity="0.1">
+        <rect x="14" y="75" width="72" height="35" rx="4" className="ni-device" opacity="0.1">
           <animate
             attributeName="y"
             values="75;80;75"
@@ -230,7 +255,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </rect>
-        <rect x="14" y="120" width="72" height="35" rx="4" fill="#1c1c1c" opacity="0.1">
+        <rect x="14" y="120" width="72" height="35" rx="4" className="ni-device" opacity="0.1">
           <animate
             attributeName="y"
             values="120;125;120"
@@ -240,7 +265,7 @@ export function NewsIllustration({ className }: { className?: string }) {
         </rect>
 
         {/* Notch */}
-        <rect x="35" y="6" width="30" height="8" rx="4" fill="#0d0d0d">
+        <rect x="35" y="6" width="30" height="8" rx="4" className="ni-notch">
           <animate
             attributeName="y"
             values="6;11;6"
@@ -252,7 +277,7 @@ export function NewsIllustration({ className }: { className?: string }) {
 
       {/* Speech bubbles / notifications */}
       <g transform="translate(280, 120)">
-        <rect x="0" y="0" width="80" height="45" rx="8" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1">
+        <rect x="0" y="0" width="80" height="45" rx="8" className="ni-surface ni-stroke-card" strokeWidth="1">
           <animate
             attributeName="opacity"
             values="1;0.7;1"
@@ -260,7 +285,7 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </rect>
-        <polygon points="20,45 30,60 40,45" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1">
+        <polygon points="20,45 30,60 40,45" className="ni-surface ni-stroke-card" strokeWidth="1">
           <animate
             attributeName="opacity"
             values="1;0.7;1"
@@ -268,9 +293,9 @@ export function NewsIllustration({ className }: { className?: string }) {
             repeatCount="indefinite"
           />
         </polygon>
-        <rect x="10" y="12" width="50" height="5" rx="1" fill="#1c1c1c" opacity="0.6" />
-        <rect x="10" y="22" width="60" height="5" rx="1" fill="#d1d5db" />
-        <rect x="10" y="32" width="40" height="5" rx="1" fill="#d1d5db" />
+        <rect x="10" y="12" width="50" height="5" rx="1" className="ni-dark" opacity="0.6" />
+        <rect x="10" y="22" width="60" height="5" rx="1" className="ni-muted" />
+        <rect x="10" y="32" width="40" height="5" rx="1" className="ni-muted" />
       </g>
 
       <g transform="translate(480, 420)">
@@ -360,7 +385,7 @@ export function NewsIllustration({ className }: { className?: string }) {
           repeatCount="indefinite"
         />
       </circle>
-      <circle cx="600" cy="500" r="5" fill="#1c1c1c">
+      <circle cx="600" cy="500" r="5" className="ni-decor">
         <animate
           attributeName="cy"
           values="500;490;500"
@@ -376,7 +401,7 @@ export function NewsIllustration({ className }: { className?: string }) {
           repeatCount="indefinite"
         />
       </circle>
-      <circle cx="150" cy="400" r="4" fill="#1c1c1c" opacity="0.5">
+      <circle cx="150" cy="400" r="4" className="ni-decor" opacity="0.5">
         <animate
           attributeName="cy"
           values="400;390;400"
