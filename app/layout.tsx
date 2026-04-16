@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import { Header } from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
-import { headers } from "next/headers";
 import { SubscriptionProvider } from "@/components/contexts/subscription-provider";
+import { isSubscribed } from "@/lib/subscription";
 import { cacheLife } from "next/cache";
 import { api } from "@/lib/api/api";
 import type { PublicationConfigResponse } from "@/lib/api/api";
@@ -76,8 +76,7 @@ function AppShell({ children }: { children?: React.ReactNode }) {
 }
 
 async function SubscriptionShell({ children }: { children: React.ReactNode }) {
-  const headersList = await headers();
-  const status = headersList.get("x-has-subscription-token") === "true" ? "active" : "inactive";
+  const status = (await isSubscribed()) ? "active" : "inactive";
   return (
     <SubscriptionProvider initialStatus={status}>
       {children}

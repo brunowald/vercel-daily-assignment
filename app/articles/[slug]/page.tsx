@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
-import { headers } from "next/headers";
 import { api, Article } from "@/lib/api/api";
+import { isSubscribed } from "@/lib/subscription";
 import { ArticlePageShell } from "@/components/article/article-page-shell";
 import { ArticleContent } from "@/components/article/article-content";
 import { TrendingArticles } from "@/components/article/trending-articles";
@@ -56,8 +56,7 @@ export async function generateMetadata({
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
   const { data: article } = await getArticle(slug);
-  const headersList = await headers();
-  const isSubscribed = headersList.get("x-has-subscription-token") === "true";
+  const subscribed = await isSubscribed();
 
   if (!article) notFound();
   if (slug !== article.slug) permanentRedirect(`/articles/${article.slug}`);
@@ -65,7 +64,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <Suspense fallback={<ArticlePageShell />}>
       <ArticlePageShell article={article}>
-        {isSubscribed ? (
+        {subscribed ? (
           <ArticleContent blocks={article.content ?? []} />
         ) : (
           <Paywall excerpt={article.excerpt} />

@@ -1,12 +1,17 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { api } from "@/lib/api/api";
 
 const COOKIE_NAME = "x-subscription-token";
 
-export async function subscribeAction() {
+export async function isSubscribed(): Promise<boolean> {
+  const headersList = await headers();
+  return headersList.get("x-has-subscription-token") === "true";
+}
+
+export async function subscribe() {
   const cookieStore = await cookies();
 
   const { token } = await api.createSubscription();
@@ -23,7 +28,7 @@ export async function subscribeAction() {
   revalidatePath("/", "layout");
 }
 
-export async function unsubscribeAction() {
+export async function unsubscribe() {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
 
@@ -38,4 +43,3 @@ export async function unsubscribeAction() {
     // Best-effort server-side deactivation; cookie is already cleared.
   }
 }
-

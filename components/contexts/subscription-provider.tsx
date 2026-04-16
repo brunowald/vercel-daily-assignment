@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useTransition, useOptimistic } from "react";
 import { useRouter } from "next/navigation";
-import { subscribeAction, unsubscribeAction } from "@/lib/subscription/subscription";
+import { subscribe, unsubscribe } from "@/lib/subscription";
 
 interface SubscriptionContextValue {
   status: "active" | "inactive";
@@ -40,9 +40,9 @@ export function SubscriptionProvider({
       setOptimisticStatus(next);
 
       if (optimisticStatus === "active") {
-        await unsubscribeAction();
+        await unsubscribe();
       } else {
-        await subscribeAction();
+        await subscribe();
       }
 
       router.refresh();
