@@ -53,24 +53,33 @@ export async function generateMetadata({
   };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = await params;
-  const { data: article } = await getArticle(slug);
-  const subscribed = await isSubscribed();
+async function ArticleDetails({ slug }: { slug: string }) {
+  const [{ data: article }, subscribed] = await Promise.all([
+    getArticle(slug),
+    isSubscribed(),
+  ]);
 
   if (!article) notFound();
   if (slug !== article.slug) permanentRedirect(`/articles/${article.slug}`);
 
   return (
+    <ArticlePageShell article={article}>
+      {subscribed ? (
+        <ArticleContent blocks={article.content ?? []} />
+      ) : (
+        <Paywall excerpt={article.excerpt} />
+      )}
+      <TrendingArticles excludeId={article.id} />
+    </ArticlePageShell>
+  );
+}
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug } = await params;
+
+  return (
     <Suspense fallback={<ArticlePageShell />}>
-      <ArticlePageShell article={article}>
-        {subscribed ? (
-          <ArticleContent blocks={article.content ?? []} />
-        ) : (
-          <Paywall excerpt={article.excerpt} />
-        )}
-        <TrendingArticles excludeId={article.id} />
-      </ArticlePageShell>
+      <ArticleDetails slug={slug} />
     </Suspense>
   );
 }
