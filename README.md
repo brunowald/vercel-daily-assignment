@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vercel Daily News
+
+A modern news publication built with Next.js 16, demonstrating the App Router, Server Components, Data Cache, and a full subscription flow.
+
+---
+
+## Features
+
+| Area | Details |
+|---|---|
+| **Home** | Breaking news banner, hero section, featured articles grid |
+| **Search** | Full-text search + category filter, URL-driven state, debounced input |
+| **Articles** | Slug-based dynamic routes, rich content renderer, OG/Twitter metadata |
+| **Paywall** | Subscribers see full content; non-subscribers see an excerpt + CTA |
+| **Subscription** | Create → Activate → Deactivate flow backed by anonymous tokens stored in an httpOnly cookie |
+| **Trending** | 4 random articles sidebar per article, current article excluded |
+| **Caching** | `"use cache"` + `cacheLife()` across all data-fetching layers (`days` / `hours` / `minutes`) |
+| **Streaming** | `<Suspense>` boundaries with skeleton fallbacks throughout |
+| **Error handling** | Global error boundary, root 404, article-level 404, permanent slug redirect |
+
+---
+
+## Architecture
+
+```
+app/
+├── page.tsx                   # Home — breaking news + featured articles
+├── search/
+│   ├── page.tsx               # Search page (SSR, URL params)
+│   ├── actions.ts             # Server action: searchArticles
+│   └── loading.tsx            # Loading skeleton
+└── articles/[slug]/
+    ├── page.tsx               # Article page + paywall + trending sidebar
+    └── not-found.tsx          # Article 404
+
+components/
+├── article/                   # Server components (data-fetching wrappers)
+├── search/                    # Search form + results (client)
+├── shared/                    # Header, Footer
+├── contexts/                  # SubscriptionProvider (optimistic state)
+└── ui/                        # Pure presentational components
+
+lib/
+├── api/api.ts                 # ApiClient — typed wrapper for all endpoints
+├── api/types.ts               # Auto-generated OpenAPI types
+└── subscription/index.ts      # subscribe / unsubscribe / isSubscribed server actions
+
+proxy.ts                       # Next.js 16 Proxy (Middleware) — validates token on every request
+```
+
+---
+
+## Subscription Flow
+
+```
+User clicks Subscribe
+  → POST /subscription/create     (receives token in response header)
+  → POST /subscription            (activates token)
+  → Token saved as httpOnly cookie
+
+On every request (proxy.ts)
+  → GET /subscription             (validates token)
+  → Sets x-has-subscription-token: true|false header
+
+Article page
+  → Reads header via isSubscribed()
+  → Renders <ArticleContent> or <Paywall>
+```
+
+---
+
+## Caching Strategy
+
+| Data | Cache profile | Reason |
+|---|---|---|
+| Publication config | `days` | Rarely changes |
+| Article metadata | `hours` | Updated periodically |
+| Categories | `hours` | Slow-moving taxonomy |
+| Featured / trending articles | `minutes` | Frequently rotated |
+| Search results | none | Always fresh |
+
+---
+
+## Tech Stack
+
+- **Next.js 16** — App Router, Server Components, `"use cache"`, Proxy
+- **React 19** — with `useOptimistic` for subscription state
+- **Tailwind CSS v4** — utility-first styling
+- **Radix UI + shadcn/ui** — accessible headless components
+- **TypeScript** — strict types generated from OpenAPI schema
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Required environment variables (`.env.local`):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+API_BASE_URL=<url>
+VERCEL_PROTECTION_BYPASS=<token>
+```
