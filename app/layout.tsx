@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import { Header } from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
@@ -32,6 +32,10 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#1a1a2e",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getPublicationConfig();
 
@@ -44,6 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const template = seo?.titleTemplate ?? "%s | Vercel Daily";
 
   return {
+    generator: "vnews-cert-v3",
     metadataBase: new URL(
       process.env.VERCEL_PROJECT_PRODUCTION_URL
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -94,9 +99,6 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable}`}
     >
-      <head>
-        <meta name="theme-color" content="#1a1a2e" />
-      </head>
       <body className="flex min-h-screen flex-col">
         <Suspense fallback={<AppShell />}>
           <SubscriptionShell>
