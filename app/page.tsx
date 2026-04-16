@@ -5,6 +5,7 @@ import Link from "next/link";
 import { api } from "@/lib/api/api";
 import { ArticleCard } from "@/components/article/article-card";
 import { BreakingNewsBanner } from "@/components/article/breaking-news-banner";
+import { BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
 
 export const metadata = {
   title: "Home",
@@ -26,7 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Suspense>
+      <Suspense fallback={<BreakingNewsBannerUI />}>
         <BreakingNewsBanner />
       </Suspense>
 

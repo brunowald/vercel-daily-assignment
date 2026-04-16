@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { headers } from "next/headers";
@@ -60,6 +60,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const isSubscribed = headersList.get("x-has-subscription-token") === "true";
 
   if (!article) notFound();
+  if (slug !== article.slug) permanentRedirect(`/articles/${article.slug}`);
 
   return (
     <Suspense fallback={<ArticlePageShell />}>
