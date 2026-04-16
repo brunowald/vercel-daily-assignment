@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useTransition, useOptimistic } from "react";
+import { useRouter } from "next/navigation";
 import { subscribeAction, unsubscribeAction } from "@/lib/subscription/subscription";
 
 interface SubscriptionContextValue {
@@ -30,18 +31,21 @@ export function SubscriptionProvider({
 }: SubscriptionProviderProps) {
   const [isPending, startTransition] = useTransition();
   const [optimisticStatus, setOptimisticStatus] = useOptimistic(initialStatus);
+  const router = useRouter();
 
   function toggle() {
     const next = optimisticStatus === "active" ? "inactive" : "active";
-    
+
     startTransition(async () => {
       setOptimisticStatus(next);
-      
+
       if (optimisticStatus === "active") {
         await unsubscribeAction();
       } else {
         await subscribeAction();
       }
+
+      router.refresh();
     });
   }
 

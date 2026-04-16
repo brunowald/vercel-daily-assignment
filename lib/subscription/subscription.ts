@@ -26,12 +26,16 @@ export async function subscribeAction() {
 export async function unsubscribeAction() {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
-  
+
   if (!token) return;
 
-  await api.deactivateSubscription(token);
-  
   cookieStore.delete(COOKIE_NAME);
   revalidatePath("/", "layout");
+
+  try {
+    await api.deactivateSubscription(token);
+  } catch {
+    // Best-effort server-side deactivation; cookie is already cleared.
+  }
 }
 
