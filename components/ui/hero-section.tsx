@@ -1,47 +1,33 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Article } from "@/lib/api/api";
+import { Button } from "@/components/ui/button";
+import { SubscribeButton } from "@/components/ui/subscribe-button";
+import { NewsIllustration } from "@/components/ui/news-illustration";
 
-export function HeroSectionUI({ article }: { article?: Article } = {}) {
-  if (!article) {
-    return (
-      <div className="group mb-12 grid gap-6 md:grid-cols-2 md:items-center">
-        <div className="relative aspect-[16/9] animate-pulse rounded-lg bg-muted" />
-        <div>
-          <div className="mb-2 h-4 w-20 animate-pulse rounded bg-muted" />
-          <div className="mb-3 h-9 w-3/4 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-full animate-pulse rounded bg-muted" />
-        </div>
-      </div>
-    );
-  }
-
+export function HeroSectionUI() {
   return (
-    <Link
-      href={`/articles/${article.slug}`}
-      className="group mb-12 grid gap-6 md:grid-cols-2 md:items-center"
-    >
-      {article.image && (
-        <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
-          <Image
-            src={article.image}
-            alt={article.title ?? ""}
-            fill
-            className="object-cover transition-transform group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-          />
-        </div>
-      )}
+    <div className="mb-12 grid gap-10 md:grid-cols-2 md:items-center">
       <div>
-        <p className="mb-2 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-          Featured
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          The Vercel Daily
         </p>
-        <h1 className="mb-3 text-3xl font-bold leading-tight group-hover:underline">
-          {article.title}
+        <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+          News and insights for modern web developers.
         </h1>
-        <p className="text-muted-foreground">{article.excerpt}</p>
+        <p className="mb-8 text-lg text-muted-foreground">
+          Changelogs, engineering deep dives, customer stories, and community
+          updates — all in one place.
+        </p>
+        <div className="flex items-center gap-3">
+          <Button asChild size="lg">
+            <Link href="/search">Browse articles →</Link>
+          </Button>
+          <SubscribeButton size="lg" />
+        </div>
       </div>
-    </Link>
+
+      <div className="hidden md:block">
+        <NewsIllustration className="w-full" />
+      </div>
+    </div>
   );
 }

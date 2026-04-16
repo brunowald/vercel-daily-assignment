@@ -1,10 +1,10 @@
 import { ArticleCard } from "@/components/article/article-card";
 import type { Article } from "@/lib/api/api";
 
-export function LatestArticlesUI({ articles }: { articles?: Article[] } = {}) {
+export function FeaturedArticlesUI({ articles }: { articles?: Article[] } = {}) {
   return (
     <>
-      <h2 className="mb-6 text-xl font-semibold">Latest Articles</h2>
+      <h2 className="mb-6 text-xl font-semibold">Featured Articles</h2>
       {articles ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
@@ -13,7 +13,7 @@ export function LatestArticlesUI({ articles }: { articles?: Article[] } = {}) {
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="overflow-hidden rounded-lg border">
               <div className="aspect-[16/9] animate-pulse bg-muted" />
               <div className="space-y-2 p-4">

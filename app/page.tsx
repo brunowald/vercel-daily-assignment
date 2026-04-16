@@ -2,9 +2,8 @@ import { Suspense } from "react";
 import { BreakingNewsBanner } from "@/components/article/breaking-news-banner";
 import { BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
 import { HeroSection } from "@/components/article/hero-section";
-import { HeroSectionUI } from "@/components/ui/hero-section";
-import { LatestArticles } from "@/components/article/latest-articles";
-import { LatestArticlesUI } from "@/components/ui/latest-articles";
+import { FeaturedArticles } from "@/components/article/featured-articles";
+import { FeaturedArticlesUI } from "@/components/ui/featured-articles";
 
 export const metadata = {
   title: "Home",
@@ -23,12 +22,10 @@ export default function HomePage() {
       </Suspense>
 
       <section className="mx-auto max-w-5xl px-4 py-12">
-        <Suspense fallback={<HeroSectionUI />}>
-          <HeroSection />
-        </Suspense>
+        <HeroSection />
 
-        <Suspense fallback={<LatestArticlesUI />}>
-          <LatestArticles />
+<Suspense fallback={<FeaturedArticlesUI />}>
+          <FeaturedArticles />
         </Suspense>
       </section>
     </>
