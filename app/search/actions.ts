@@ -12,5 +12,5 @@ export async function searchArticles(
 
   cacheLife("minutes");
 
-  return api.listArticles({ search, category, limit: 5 }).catch(() => ({ data: undefined }));
+  return api.listArticles({ search, category, limit: 5 });
 }

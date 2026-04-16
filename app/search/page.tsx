@@ -18,7 +18,7 @@ async function fetchCategories(): Promise<CategoryListResponse> {
 
   cacheLife("hours");
 
-  return api.getCategories().catch(() => ({ data: undefined }));
+  return api.getCategories();
 }
 
 interface SearchPageProps {

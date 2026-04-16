@@ -20,9 +20,7 @@ export default async function HomePage() {
   "use cache";
   cacheLife("minutes");
 
-  const { data: articles } = await api
-    .listArticles({ featured: "true" })
-    .catch(() => ({ data: undefined }));
+  const { data: articles } = await api.listArticles({ featured: "true" });
   const [hero, ...rest] = articles ?? [];
 
   return (

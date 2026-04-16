@@ -87,6 +87,20 @@ export class ApiClient {
   }
 
   /**
+   * Like `fetch`, but catches errors and returns `{ data: undefined }` instead
+   * of throwing. Use for read-only endpoints where partial rendering is preferred
+   * over a full error page.
+   */
+  private async safeFetch<T>(path: string, init?: FetchOptions): Promise<T> {
+    try {
+      return await this.fetch<T>(path, init);
+    } catch (e) {
+      console.error(`API ${path} failed`, e);
+      return { data: undefined } as T;
+    }
+  }
+
+  /**
    * Returns a paginated list of articles.
    * @param params - Filter by category, search term, featured status, page, and limit.
    * @param init - Optional fetch overrides (e.g. `{ next: { revalidate: 60 } }`).
@@ -96,7 +110,7 @@ export class ApiClient {
     init?: FetchOptions
   ): Promise<ArticleListResponse> {
     const qs = params ? this.toQueryString(params) : "";
-    return this.fetch<ArticleListResponse>(
+    return this.safeFetch<ArticleListResponse>(
       `/articles${qs ? `?${qs}` : ""}`,
       init
     );
@@ -111,7 +125,7 @@ export class ApiClient {
     idOrSlug: string,
     init?: FetchOptions
   ): Promise<ArticleResponse> {
-    return this.fetch<ArticleResponse>(`/articles/${idOrSlug}`, init);
+    return this.safeFetch<ArticleResponse>(`/articles/${idOrSlug}`, init);
   }
 
   /**
@@ -124,7 +138,7 @@ export class ApiClient {
     init?: FetchOptions
   ): Promise<{ success?: boolean; data?: Article[] }> {
     const qs = params ? this.toQueryString(params) : "";
-    return this.fetch(`/articles/trending${qs ? `?${qs}` : ""}`, init);
+    return this.safeFetch(`/articles/trending${qs ? `?${qs}` : ""}`, init);
   }
 
   /**
@@ -132,7 +146,7 @@ export class ApiClient {
    * @param init - Optional fetch overrides.
    */
   async getBreakingNews(init?: FetchOptions): Promise<BreakingNewsResponse> {
-    return this.fetch<BreakingNewsResponse>("/breaking-news", init);
+    return this.safeFetch<BreakingNewsResponse>("/breaking-news", init);
   }
 
   /**
@@ -140,7 +154,7 @@ export class ApiClient {
    * @param init - Optional fetch overrides.
    */
   async getCategories(init?: FetchOptions): Promise<CategoryListResponse> {
-    return this.fetch<CategoryListResponse>("/categories", init);
+    return this.safeFetch<CategoryListResponse>("/categories", init);
   }
 
   /**
@@ -150,7 +164,7 @@ export class ApiClient {
   async getPublicationConfig(
     init?: FetchOptions
   ): Promise<PublicationConfigResponse> {
-    return this.fetch<PublicationConfigResponse>("/publication/config", init);
+    return this.safeFetch<PublicationConfigResponse>("/publication/config", init);
   }
 
   /**

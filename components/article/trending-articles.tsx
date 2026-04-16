@@ -11,9 +11,9 @@ export async function TrendingArticles({ excludeId }: TrendingArticlesProps) {
   "use cache";
   cacheLife("minutes");
 
-  const { data: articles } = await api
-    .getTrendingArticles(excludeId ? { exclude: excludeId } : undefined)
-    .catch(() => ({ data: undefined }));
+  const { data: articles } = await api.getTrendingArticles(
+    excludeId ? { exclude: excludeId } : undefined,
+  );
 
   if (!articles?.length) return null;
 

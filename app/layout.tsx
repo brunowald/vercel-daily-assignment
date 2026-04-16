@@ -10,14 +10,11 @@ import { api } from "@/lib/api/api";
 import type { PublicationConfigResponse } from "@/lib/api/api";
 import "./globals.css";
 
-async function getPublicationConfig(): Promise<PublicationConfigResponse | null> {
+async function getPublicationConfig(): Promise<PublicationConfigResponse> {
   "use cache";
   cacheLife("days");
-
-  return api.getPublicationConfig().catch((e) => {
-    console.error("Failed to fetch publication config", e);
-    return null;
-  });
+  
+  return api.getPublicationConfig();
 }
 
 const geistSans = Geist({
