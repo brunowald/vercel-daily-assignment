@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo, useTransition } from "react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { debounce } from "@/lib/utils";
@@ -110,18 +111,21 @@ export function SearchForm({
 
   return (
     <div className="mb-8 flex flex-col gap-3 sm:flex-row">
-      <select
-        value={category}
-        onChange={(e) => handleCategoryChange(e.target.value)}
-        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs outline-none focus-visible:ring-1 focus-visible:ring-ring"
-      >
-        <option value="">All Categories</option>
-        {categories.map((category) => (
-          <option key={category.slug} value={category.slug}>
-            {category.name}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <select
+          value={category}
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          className="h-9 appearance-none rounded-md border border-input bg-background pl-3 pr-8 text-sm shadow-xs outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category.slug} value={category.slug}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+      </div>
 
       <input
         type="text"
