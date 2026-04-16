@@ -1,5 +1,5 @@
 import { api } from "@/lib/api/api";
-import { BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
+import { BreakingNewsBanner as BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
 
 export async function BreakingNewsBanner() {
   const { data: news } = await api.getBreakingNews();

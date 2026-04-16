@@ -1,7 +1,7 @@
 import { ArticleCard } from "@/components/article/article-card";
 import type { Article } from "@/lib/api/api";
 
-export function FeaturedArticlesUI({ articles }: { articles?: Article[] } = {}) {
+export function FeaturedArticles({ articles }: { articles?: Article[] } = {}) {
   return (
     <>
       <h2 className="mb-6 text-xl font-semibold">Featured Articles</h2>

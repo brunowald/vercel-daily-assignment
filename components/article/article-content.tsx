@@ -71,6 +71,7 @@ export function ArticleContent({ blocks }: ArticleContentProps) {
               </ol>
             );
           case "image":
+            if (!block.src) return null;
             return (
               <figure key={i}>
                 <Image src={block.src} alt={block.alt} width={800} height={450} className="rounded-lg" />

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SubscribeButton } from "@/components/ui/subscribe-button";
 import { NewsIllustration } from "@/components/ui/news-illustration";
 
-export function HeroSectionUI() {
+export function HeroSection() {
   return (
     <div className="mb-12 grid gap-10 md:grid-cols-2 md:items-center">
       <div>

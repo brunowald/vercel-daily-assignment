@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { BreakingNewsBanner } from "@/components/article/breaking-news-banner";
-import { BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
+import { BreakingNewsBanner as BreakingNewsBannerUI } from "@/components/ui/breaking-news-banner";
 import { HeroSection } from "@/components/article/hero-section";
 import { FeaturedArticles } from "@/components/article/featured-articles";
-import { FeaturedArticlesUI } from "@/components/ui/featured-articles";
+import { FeaturedArticles as FeaturedArticlesUI } from "@/components/ui/featured-articles";
 
 export const metadata = {
   title: "Home",

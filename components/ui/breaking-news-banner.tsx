@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function BreakingNewsBannerUI({
+export function BreakingNewsBanner({
   headline,
   articleId,
 }: {
